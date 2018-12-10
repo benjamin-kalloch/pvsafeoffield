@@ -1,0 +1,106 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="SaveOFFieldFilter" class="vtkSaveOFFieldFilter" label="Save as OF-field">
+
+      <Documentation
+        long_help="Save a scalar, vector, tensor field to an OpenFOAM compatible ASCII file."
+        short_help="Save a scalar, vector, tensor field to an OpenFOAM compatible ASCII file.">
+        Save a scalar, vector, tensor field to an OpenFOAM compatible ASCII file.
+      </Documentation>
+
+        <!--
+            'attribute_type' of InputArrayDomain is only reasonable for
+            'cell' because OpenFOAM-field- fieles are defined cell-wise
+        -->
+      <InputProperty
+         name="FieldInput"
+         port_inex="0"
+         command="SetInputConnection"
+         multiple_input="0">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkDataSet"/>
+        </DataTypeDomain>
+        <InputArrayDomain name="input_array1" attribute_type="cell"
+          number_of_components="any" />
+        <Documentation>
+            This property specifies the the field to be saved.
+        </Documentation>
+      </InputProperty>
+
+    <!--
+        explanation for 'element_types':
+        "
+        type 0 => int
+        type 1 => double
+        type 2 => string
+
+        As the method contains a mix of argument types, we made the
+        choice to encode all of them as a string and let the property
+        know how to convert them to the correct underlying type.
+        "
+    -->
+     <StringVectorProperty
+         name="SelectInputArray"
+         command="SetInputArrayToProcess"
+         element_types="0 0 0 0 2"
+         number_of_elements="5"
+         label="Data-Array">
+        <ArrayListDomain name="array_list" attribute_type="cell"
+             input_domain_name="input_array1">
+          <RequiredProperties>
+            <Property name="FieldInput" function="Input"/>
+          </RequiredProperties>
+        </ArrayListDomain>
+        <Documentation>
+          This property indicates the name of the data-array to save.
+        </Documentation>
+      </StringVectorProperty>
+
+      <StringVectorProperty
+            name="FilePath"
+            animateable="0"
+            command="SetfilePath"
+            number_of_elements="1">
+        <FileListDomain name="files"/>
+         <Hints>
+            <PlaceholderText>data</PlaceholderText>
+         </Hints>
+        <Documentation>
+          This property specifies the file name.
+        </Documentation>
+      </StringVectorProperty>
+
+      <StringVectorProperty
+            name="FieldName"
+            animateable="0"
+            command="SetfieldName"
+            number_of_elements="1"
+            default_values="field">
+        <Documentation>
+          This property specifies the field name.
+        </Documentation>
+      </StringVectorProperty>
+
+      <StringVectorProperty
+            name="DimensionString"
+            animateable="0"
+            command="SetdimensionString"
+            number_of_elements="1"
+            default_values="[0 0 0 0 0 0 0]">
+        <Documentation>
+          This property specifies the dimensions of the field using the exponent of 7 SI-units: [ Mass(kg) Length(m) Time(s) Temperature(K) Quantitiy(mol) Current(A) Luminous-Intensity(cd)].
+        </Documentation>
+      </StringVectorProperty>
+
+      <Hints>
+        <ShowInMenu category="I/O" />
+      </Hints>
+
+    </SourceProxy>
+
+  </ProxyGroup>
+</ServerManagerConfiguration>
