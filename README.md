@@ -1,6 +1,6 @@
 # PVSafeOFField
 
-A ParaView plugin to save cell data in ASCII OpenFOAM field format. The plugin is described in the paper **A flexible open-source pipeline for simulating transcranial electric stimulation** by *Benjamin Kalloch, Pierre-Louis Bazin,  Arno Villringer, Bernhard Sehm, and Mario Hlawitschka*.
+A ParaView plugin to save cell data in ASCII OpenFOAM field format. The plugin is described in the paper **A flexible workflow for simulating transcranial electric stimulation in healthy and lesioned brains** by *Benjamin Kalloch, Pierre-Louis Bazin,  Arno Villringer, Bernhard Sehm, and Mario Hlawitschka*.
 
 ## How to compile
 1. Set up the ParaView environment as described in [1] 
